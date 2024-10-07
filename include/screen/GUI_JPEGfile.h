@@ -1,6 +1,8 @@
 #ifndef GUI_JPEGFILE_H
 #define GUI_JPEGFILE_H
 
+#include "screen/DEV_Config.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
