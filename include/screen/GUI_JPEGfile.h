@@ -1,8 +1,6 @@
 #ifndef GUI_JPEGFILE_H
 #define GUI_JPEGFILE_H
 
-#include "GUI_Paint.h"
-
 #ifdef __cplusplus
 extern "C" {
 #endif
