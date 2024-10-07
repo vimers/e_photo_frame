@@ -73,6 +73,10 @@
 #include "screen/DEV_Config.h"
 //#include "../Fonts/fonts.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Image attributes
 **/
@@ -208,6 +212,10 @@ void Paint_DrawCircle(UWORD X_Center, UWORD Y_Center, UWORD Radius, UWORD Color,
 //pic
 void Paint_DrawBitMap(const unsigned char* image_buffer);
 
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 

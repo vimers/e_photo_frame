@@ -56,6 +56,10 @@
 #include <string.h>
 #include "Debug.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifdef RPI
     #ifdef USE_BCM2835_LIB
         #include <bcm2835.h>
@@ -115,5 +119,9 @@ UBYTE DEV_SPI_ReadData();
 UBYTE DEV_Module_Init(void);
 void DEV_Module_Exit(void);
 
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
