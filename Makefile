@@ -3,7 +3,7 @@ CC := gcc
 CXX := g++
 CFLAGS := -Wall -Wextra -O0 -g -DRPI -DUSE_LGPIO_LIB
 CXXFLAGS := $(CFLAGS)
-LDFLAGS := -llgpio -lm -lopencv_core -lopencv_imgproc -lopencv_highgui
+LDFLAGS := -llgpio -lm -lopencv_core -lopencv_imgproc -lopencv_imgcodecs -lopencv_highgui
 
 # 目标可执行文件名
 TARGET := e_photo_frame
