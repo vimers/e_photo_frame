@@ -30,29 +30,38 @@ UBYTE GUI_ReadJpeg_RGB_7Color(const char *path, UWORD Xstart, UWORD Ystart)
     // Copy the resized image onto the white canvas
     scaled.copyTo(resized(cv::Rect(x_offset, y_offset, scaled.cols, scaled.rows)));
 
+    // Define the 7 colors
+    const cv::Vec3b COLORS[] = {
+        {0, 0, 0},     // Black
+        {255, 255, 255}, // White
+        {0, 255, 0},   // Green
+        {255, 0, 0},   // Blue
+        {0, 0, 255},   // Red
+        {0, 255, 255}, // Yellow
+        {0, 128, 255}  // Orange
+    };
+
+    // Function to calculate Euclidean distance between two colors
+    double colorDistance(const cv::Vec3b& c1, const cv::Vec3b& c2) {
+        return std::sqrt(std::pow(c1[0] - c2[0], 2) + 
+                         std::pow(c1[1] - c2[1], 2) + 
+                         std::pow(c1[2] - c2[2], 2));
+    }
+
     // Convert to 7-color and paint
     for (int y = 0; y < 480; y++) {
         for (int x = 0; x < 800; x++) {
             cv::Vec3b pixel = resized.at<cv::Vec3b>(y, x);
             UBYTE color;
 
-            // Convert RGB to 7-color
-            if (pixel[2] < 64 && pixel[1] < 64 && pixel[0] < 64) {
-                color = 0; // Black
-            } else if (pixel[2] > 192 && pixel[1] > 192 && pixel[0] > 192) {
-                color = 1; // White
-            } else if (pixel[2] < 64 && pixel[1] > 192 && pixel[0] < 64) {
-                color = 2; // Green
-            } else if (pixel[2] > 192 && pixel[1] < 64 && pixel[0] < 64) {
-                color = 3; // Blue
-            } else if (pixel[2] < 64 && pixel[1] < 64 && pixel[0] > 192) {
-                color = 4; // Red
-            } else if (pixel[2] < 64 && pixel[1] > 192 && pixel[0] > 192) {
-                color = 5; // Yellow
-            } else if (pixel[2] < 64 && pixel[1] > 64 && pixel[1] < 192 && pixel[0] > 192) {
-                color = 6; // Orange
-            } else {
-                color = 1; // Default to white for undefined colors
+            // Find the closest color
+            double minDistance = std::numeric_limits<double>::max();
+            for (int i = 0; i < 7; i++) {
+                double distance = colorDistance(pixel, COLORS[i]);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    color = i;
+                }
             }
 
             Paint_SetPixel(Xstart + x, Ystart + y, color);
