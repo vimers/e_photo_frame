@@ -98,10 +98,10 @@ extern PAINT Paint;
 /**
  * Display rotate
 **/
-#define ROTATE_0            0
-#define ROTATE_90           90
-#define ROTATE_180          180
-#define ROTATE_270          270
+#define ROTATE_0            (0)
+#define ROTATE_90           (90)
+#define ROTATE_180           (180)
+#define ROTATE_270           (270)
 
 /**
  * Display Flip
@@ -117,19 +117,19 @@ typedef enum {
 /**
  * image color
 **/
-#define WHITE          0xFF
-#define BLACK          0x00
-#define RED            BLACK
+#define WHITE           (0xFF)
+#define BLACK           (0x00)
+#define RED             (BLACK)
 
-#define IMAGE_BACKGROUND    WHITE
-#define FONT_FOREGROUND     BLACK
-#define FONT_BACKGROUND     WHITE
+#define IMAGE_BACKGROUND    (WHITE)
+#define FONT_FOREGROUND     (BLACK)
+#define FONT_BACKGROUND     (WHITE)
 
 //4 Gray level
-#define  GRAY1 0x03 //Blackest
-#define  GRAY2 0x02
-#define  GRAY3 0x01 //gray
-#define  GRAY4 0x00 //white
+#define  GRAY1  (0x03) //Blackest
+#define  GRAY2  (0x02)
+#define  GRAY3  (0x01) //gray
+#define  GRAY4  (0x00) //white
 
 /**
  * The size of the point
@@ -144,7 +144,7 @@ typedef enum {
     DOT_PIXEL_7X7  , 		// 7 X 7
     DOT_PIXEL_8X8  , 		// 8 X 8
 } DOT_PIXEL;
-#define DOT_PIXEL_DFT  DOT_PIXEL_1X1  //Default dot pilex
+#define DOT_PIXEL_DFT  (DOT_PIXEL_1X1)  //Default dot pilex
 
 /**
  * Point size fill style
@@ -153,7 +153,7 @@ typedef enum {
     DOT_FILL_AROUND  = 1,		// dot pixel 1 x 1
     DOT_FILL_RIGHTUP  , 		// dot pixel 2 X 2
 } DOT_STYLE;
-#define DOT_STYLE_DFT  DOT_FILL_AROUND  //Default dot pilex
+#define DOT_STYLE_DFT  (DOT_FILL_AROUND)  //Default dot pilex
 
 /**
  * Line style, solid or dashed
