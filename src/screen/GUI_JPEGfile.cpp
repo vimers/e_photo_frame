@@ -5,6 +5,13 @@ extern "C" {
 #include "screen/Debug.h"
 }
 
+// Function to calculate Euclidean distance between two colors
+double colorDistance(const cv::Vec3b& c1, const cv::Vec3b& c2) {
+    return std::sqrt(std::pow(c1[0] - c2[0], 2) + 
+                        std::pow(c1[1] - c2[1], 2) + 
+                        std::pow(c1[2] - c2[2], 2));
+}
+
 UBYTE GUI_ReadJpeg_RGB_7Color(const char *path, UWORD Xstart, UWORD Ystart)
 {
     cv::Mat image = cv::imread(path, cv::IMREAD_COLOR);
@@ -40,13 +47,6 @@ UBYTE GUI_ReadJpeg_RGB_7Color(const char *path, UWORD Xstart, UWORD Ystart)
         {0, 255, 255}, // Yellow
         {0, 128, 255}  // Orange
     };
-
-    // Function to calculate Euclidean distance between two colors
-    double colorDistance(const cv::Vec3b& c1, const cv::Vec3b& c2) {
-        return std::sqrt(std::pow(c1[0] - c2[0], 2) + 
-                         std::pow(c1[1] - c2[1], 2) + 
-                         std::pow(c1[2] - c2[2], 2));
-    }
 
     // Convert to 7-color and paint
     for (int y = 0; y < 480; y++) {
