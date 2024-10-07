@@ -1,4 +1,5 @@
 #include "screen/GUI_JPEGfile.h"
+#include "GUI_Paint.h"
 #include <opencv2/opencv.hpp>
 extern "C" {
 #include "screen/Debug.h"
