@@ -16,7 +16,7 @@ SRCS := $(wildcard $(SRC_DIR)/*.c) $(wildcard $(SRC_DIR)/**/*.c) \
         $(wildcard $(SRC_DIR)/*.cpp) $(wildcard $(SRC_DIR)/**/*.cpp)
 
 # 头文件目录
-INC_DIR := include
+INC_DIR := include /usr/include/opencv4
 # 构建目录
 BUILD_DIR := build
 
