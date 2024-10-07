@@ -5,11 +5,17 @@ extern "C" {
 #include "screen/Debug.h"
 }
 
-// Function to calculate Euclidean distance between two colors
+// Function to calculate weighted distance in HSV space
 double colorDistance(const cv::Vec3b& c1, const cv::Vec3b& c2) {
-    return std::sqrt(std::pow(c1[0] - c2[0], 2) + 
-                        std::pow(c1[1] - c2[1], 2) + 
-                        std::pow(c1[2] - c2[2], 2));
+    double hueWeight = 0.5;
+    double satWeight = 0.3;
+    double valWeight = 0.2;
+    
+    double hueDiff = std::min(std::abs(c1[0] - c2[0]), 180 - std::abs(c1[0] - c2[0])) / 180.0;
+    double satDiff = std::abs(c1[1] - c2[1]) / 255.0;
+    double valDiff = std::abs(c1[2] - c2[2]) / 255.0;
+    
+    return hueWeight * hueDiff + satWeight * satDiff + valWeight * valDiff;
 }
 
 UBYTE GUI_ReadJpeg_RGB_7Color(const char *path, UWORD Xstart, UWORD Ystart)
@@ -37,21 +43,25 @@ UBYTE GUI_ReadJpeg_RGB_7Color(const char *path, UWORD Xstart, UWORD Ystart)
     // Copy the resized image onto the white canvas
     scaled.copyTo(resized(cv::Rect(x_offset, y_offset, scaled.cols, scaled.rows)));
 
-    // Define the 7 colors
+    // Convert to HSV color space
+    cv::Mat hsvImage;
+    cv::cvtColor(resized, hsvImage, cv::COLOR_BGR2HSV);
+
+    // Define the 7 colors in HSV space
     const cv::Vec3b COLORS[] = {
-        {0, 0, 0},     // Black
-        {255, 255, 255}, // White
-        {0, 255, 0},   // Green
-        {255, 0, 0},   // Blue
-        {0, 0, 255},   // Red
-        {0, 255, 255}, // Yellow
-        {0, 128, 255}  // Orange
+        {0, 0, 0},       // Black
+        {0, 0, 255},     // White
+        {60, 255, 255},  // Green
+        {120, 255, 255}, // Blue
+        {0, 255, 255},   // Red
+        {30, 255, 255},  // Yellow
+        {15, 255, 255}   // Orange
     };
 
     // Convert to 7-color and paint
     for (int y = 0; y < 480; y++) {
         for (int x = 0; x < 800; x++) {
-            cv::Vec3b pixel = resized.at<cv::Vec3b>(y, x);
+            cv::Vec3b pixel = hsvImage.at<cv::Vec3b>(y, x);
             UBYTE color;
 
             // Find the closest color
@@ -62,6 +72,11 @@ UBYTE GUI_ReadJpeg_RGB_7Color(const char *path, UWORD Xstart, UWORD Ystart)
                     minDistance = distance;
                     color = i;
                 }
+            }
+
+            // Special handling for grays
+            if (pixel[1] < 30 && pixel[2] > 20) {  // Low saturation and not too dark
+                color = (pixel[2] < 128) ? 0 : 1;  // Choose black or white based on value
             }
 
             Paint_SetPixel(Xstart + x, Ystart + y, color);
