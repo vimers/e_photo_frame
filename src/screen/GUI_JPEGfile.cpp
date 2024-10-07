@@ -1,7 +1,7 @@
-#include "GUI_JPEGfile.h"
+#include "screen/GUI_JPEGfile.h"
 #include <opencv2/opencv.hpp>
 extern "C" {
-#include "Debug.h"
+#include "screen/Debug.h"
 }
 
 UBYTE GUI_ReadJpeg_RGB_7Color(const char *path, UWORD Xstart, UWORD Ystart)
