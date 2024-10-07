@@ -30,9 +30,28 @@ void draw(const char* img_path) {
 
     Paint_SelectImage(BlackImage);
     
-    if (GUI_ReadBmp_RGB_7Color(img_path, 0, 0) != 0) {
+    // Get the file extension
+    const char *ext = strrchr(img_path, '.');
+    if (ext == NULL) {
+        fprintf(stderr, "Error: Unable to determine file extension for '%s'.\n", img_path);
+        goto cleanup;
+    }
+    
+    int result;
+    if (strcasecmp(ext, ".bmp") == 0) {
+        // For BMP files
+        result = GUI_ReadBmp_RGB_7Color(img_path, 0, 0);
+    } else if (strcasecmp(ext, ".jpg") == 0 || strcasecmp(ext, ".jpeg") == 0) {
+        // For JPEG files
+        result = GUI_ReadJpeg_RGB_7Color(img_path, 0, 0);
+    } else {
+        fprintf(stderr, "Error: Unsupported file format '%s'.\n", ext);
+        goto cleanup;
+    }
+
+    if (result != 0) {
         fprintf(stderr, "Error: Failed to read or display the image '%s'.\n", img_path);
-		goto cleanup;
+        goto cleanup;
     }
     
     EPD_7IN3F_Display(BlackImage);
