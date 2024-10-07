@@ -110,7 +110,7 @@ void Paint_NewImage(UBYTE *image, UWORD Width, UWORD Height, UWORD Rotate, UWORD
     Paint.Rotate = Rotate;
     Paint.Mirror = MIRROR_NONE;
     
-    if(Rotate == ROTATE_0 || Rotate == ROTATE_180) {
+    if(Rotate == EPD_EPD_ROTATE_0 || Rotate == EPD_ROTATE_180) {
         Paint.Width = Width;
         Paint.Height = Height;
     } else {
@@ -136,7 +136,7 @@ parameter:
 ******************************************************************************/
 void Paint_SetRotate(UWORD Rotate)
 {
-    if(Rotate == ROTATE_0 || Rotate == ROTATE_90 || Rotate == ROTATE_180 || Rotate == ROTATE_270) {
+    if(Rotate == EPD_EPD_ROTATE_0 || Rotate == EPD_ROTATE_90 || Rotate == EPD_ROTATE_180 || Rotate == EPD_ROTATE_270) {
         Debug("Set image Rotate %d\r\n", Rotate);
         Paint.Rotate = Rotate;
     } else {
