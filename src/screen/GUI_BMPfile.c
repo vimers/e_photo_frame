@@ -526,4 +526,3 @@ UBYTE GUI_ReadBmp_RGB_6Color(const char *path, UWORD Xstart, UWORD Ystart)
     }
     return 0;
 }
-
